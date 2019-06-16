@@ -7,10 +7,24 @@ import Vuex from "vuex";
  */
 
 require("./bootstrap");
+require("leaflet");
+require("./stamen");
 
 window.Vue = require("vue");
 
 Vue.use(Vuex);
+
+const store = new Vuex.Store({
+    state: {
+        count: 0
+    },
+    mutations: {
+        increment(state) {
+            state.count++;
+        }
+    }
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,6 +41,7 @@ Vue.component(
     require("./components/ExampleComponent.vue").default
 );
 Vue.component("ffp-index", require("./components/IndexComponent.vue").default);
+Vue.component("ffp-map", require("./components/MapComponent.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,5 +50,6 @@ Vue.component("ffp-index", require("./components/IndexComponent.vue").default);
  */
 
 const app = new Vue({
-    el: "#app"
+    el: "#app",
+    store
 });

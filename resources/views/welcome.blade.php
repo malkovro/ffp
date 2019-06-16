@@ -16,5 +16,5 @@
             <ffp-index></ffp-index>
         </div> 
         <script src="{{ asset('js/app.js') }}"></script>
-    </body>
+  </body>
 </html>
