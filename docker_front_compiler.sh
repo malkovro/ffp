@@ -1,0 +1,1 @@
+docker run -it --rm --name ffp_front_installer -v "$PWD":/var/front -w /var/front node npm install && npm run watch
