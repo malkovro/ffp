@@ -1,11 +1,5 @@
-<style>
-.ffp-map {
-  height: 600px;
-}
-</style>
-
 <template>
-  <div id="map" class="ffp-map"></div>
+  <div v-bind:id="mapId" v-bind:style="{ height: height }"></div>
 </template>
 
 <script lang="ts">
@@ -15,18 +9,31 @@ import { mapState } from "vuex";
 import * as L from "leaflet";
 import { MainMap } from "../models/main-map";
 
-@Component
+@Component({
+  props: ["height"]
+})
 export default class extends Vue {
   mainMap = new MainMap();
+  randId: number;
   count?: number;
+  height: string;
+
+  constructor() {
+    super();
+    this.randId = Math.floor(Math.random() * 1000000);
+  }
 
   mounted() {
-    this.initMap();
     this.initLayers();
+    this.initMap();
   }
+  get mapId() {
+    return "map_" + this.randId;
+  }
+
   initMap() {
     this.mainMap.tileLayer = new (L as any).StamenTileLayer("watercolor");
-    this.mainMap.map = new L.Map("map", {
+    this.mainMap.map = new L.Map(this.mapId, {
       center: new L.LatLng(37.7, -122.4),
       zoom: 12
     });

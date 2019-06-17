@@ -3,15 +3,10 @@
      * tile.stamen.js v1.3.0
      */
 
-    var SUBDOMAINS = "a. b. c. d.".split(" "),
+    var SUBDOMAINS = 'a. b. c. d.'.split(' '),
         MAKE_PROVIDER = function(layer, type, minZoom, maxZoom) {
             return {
-                url: [
-                    "http://{S}tile.stamen.com/",
-                    layer,
-                    "/{Z}/{X}/{Y}.",
-                    type
-                ].join(""),
+                url: ['http://{S}tile.stamen.com/', layer, '/{Z}/{X}/{Y}.', type].join(''),
                 type: type,
                 subdomains: SUBDOMAINS.slice(),
                 minZoom: minZoom,
@@ -21,59 +16,54 @@
                     'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
                     'Data by <a href="http://openstreetmap.org/">OpenStreetMap</a>, ',
                     'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
-                ].join("")
+                ].join('')
             };
         },
         PROVIDERS = {
-            toner: MAKE_PROVIDER("toner", "png", 0, 20),
-            terrain: MAKE_PROVIDER("terrain", "png", 0, 18),
-            "terrain-classic": MAKE_PROVIDER("terrain-classic", "png", 0, 18),
-            watercolor: MAKE_PROVIDER("watercolor", "jpg", 1, 18),
-            "trees-cabs-crime": {
-                url:
-                    "http://{S}.tiles.mapbox.com/v3/stamen.trees-cabs-crime/{Z}/{X}/{Y}.png",
-                type: "png",
-                subdomains: "a b c d".split(" "),
+            toner: MAKE_PROVIDER('toner', 'png', 0, 20),
+            terrain: MAKE_PROVIDER('terrain', 'png', 0, 18),
+            'terrain-classic': MAKE_PROVIDER('terrain-classic', 'png', 0, 18),
+            watercolor: MAKE_PROVIDER('watercolor', 'jpg', 1, 18),
+            'trees-cabs-crime': {
+                url: 'http://{S}.tiles.mapbox.com/v3/stamen.trees-cabs-crime/{Z}/{X}/{Y}.png',
+                type: 'png',
+                subdomains: 'a b c d'.split(' '),
                 minZoom: 11,
                 maxZoom: 18,
-                extent: [
-                    { lat: 37.853, lon: -122.577 },
-                    { lat: 37.684, lon: -122.313 }
-                ],
+                extent: [{ lat: 37.853, lon: -122.577 }, { lat: 37.684, lon: -122.313 }],
                 attribution: [
                     'Design by Shawn Allen at <a href="http://stamen.com/">Stamen</a>.',
                     'Data courtesy of <a href="http://fuf.net/">FuF</a>,',
                     '<a href="http://www.yellowcabsf.com/">Yellow Cab</a>',
                     '&amp; <a href="http://sf-police.org/">SFPD</a>.'
-                ].join(" ")
+                ].join(' ')
             }
         };
 
-    PROVIDERS["terrain-classic"].url =
-        "http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.png";
+    PROVIDERS['terrain-classic'].url = 'http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.png';
 
     // set up toner and terrain flavors
-    setupFlavors("toner", ["hybrid", "labels", "lines", "background", "lite"]);
-    setupFlavors("terrain", ["background", "labels", "lines"]);
+    setupFlavors('toner', ['hybrid', 'labels', 'lines', 'background', 'lite']);
+    setupFlavors('terrain', ['background', 'labels', 'lines']);
 
     // toner 2010
-    deprecate("toner", ["2010"]);
+    deprecate('toner', ['2010']);
 
     // toner 2011 flavors
-    deprecate("toner", ["2011", "2011-lines", "2011-labels", "2011-lite"]);
+    deprecate('toner', ['2011', '2011-lines', '2011-labels', '2011-lite']);
 
     var odbl = [
-        "toner",
-        "toner-hybrid",
-        "toner-labels",
-        "toner-lines",
-        "toner-background",
-        "toner-lite",
-        "terrain",
-        "terrain-background",
-        "terrain-lines",
-        "terrain-labels",
-        "terrain-classic"
+        'toner',
+        'toner-hybrid',
+        'toner-labels',
+        'toner-lines',
+        'toner-background',
+        'toner-lite',
+        'terrain',
+        'terrain-background',
+        'terrain-lines',
+        'terrain-labels',
+        'terrain-classic'
     ];
 
     for (var i = 0; i < odbl.length; i++) {
@@ -85,7 +75,7 @@
             'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
             'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
             'under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-        ].join("");
+        ].join('');
     }
 
     /*
@@ -100,13 +90,8 @@
         var provider = getProvider(base);
 
         for (var i = 0; i < flavors.length; i++) {
-            var flavor = [base, flavors[i]].join("-");
-            PROVIDERS[flavor] = MAKE_PROVIDER(
-                flavor,
-                provider.type,
-                provider.minZoom,
-                provider.maxZoom
-            );
+            var flavor = [base, flavors[i]].join('-');
+            PROVIDERS[flavor] = MAKE_PROVIDER(flavor, provider.type, provider.minZoom, provider.maxZoom);
             PROVIDERS[flavor].deprecated = true;
         }
     }
@@ -118,13 +103,8 @@
     function setupFlavors(base, flavors, type) {
         var provider = getProvider(base);
         for (var i = 0; i < flavors.length; i++) {
-            var flavor = [base, flavors[i]].join("-");
-            PROVIDERS[flavor] = MAKE_PROVIDER(
-                flavor,
-                type || provider.type,
-                provider.minZoom,
-                provider.maxZoom
-            );
+            var flavor = [base, flavors[i]].join('-');
+            PROVIDERS[flavor] = MAKE_PROVIDER(flavor, type || provider.type, provider.minZoom, provider.maxZoom);
         }
     }
 
@@ -138,13 +118,13 @@
             if (provider.deprecated && console && console.warn) {
                 console.warn(
                     name +
-                        " is a deprecated style; it will be redirected to its replacement. For performance improvements, please change your reference."
+                        ' is a deprecated style; it will be redirected to its replacement. For performance improvements, please change your reference.'
                 );
             }
 
             return provider;
         } else {
-            throw "No such provider (" + name + ")";
+            throw 'No such provider (' + name + ')';
         }
     }
 
@@ -154,18 +134,12 @@
      *
      * Works with both 1.x and 2.x by checking for the existence of MM.Template.
      */
-    if (typeof MM === "object") {
-        var ModestTemplate =
-            typeof MM.Template === "function"
-                ? MM.Template
-                : MM.TemplatedMapProvider;
+    if (typeof MM === 'object') {
+        var ModestTemplate = typeof MM.Template === 'function' ? MM.Template : MM.TemplatedMapProvider;
         MM.StamenTileLayer = function(name) {
             var provider = getProvider(name);
             this._provider = provider;
-            MM.Layer.call(
-                this,
-                new ModestTemplate(provider.url, provider.subdomains)
-            );
+            MM.Layer.call(this, new ModestTemplate(provider.url, provider.subdomains));
             this.provider.setZoomRange(provider.minZoom, provider.maxZoom);
             this.attribution = provider.attribution;
         };
@@ -175,12 +149,8 @@
                 var provider = this._provider;
                 if (provider.extent) {
                     map.coordLimits = [
-                        map
-                            .locationCoordinate(provider.extent[0])
-                            .zoomTo(provider.minZoom),
-                        map
-                            .locationCoordinate(provider.extent[1])
-                            .zoomTo(provider.maxZoom)
+                        map.locationCoordinate(provider.extent[0]).zoomTo(provider.minZoom),
+                        map.locationCoordinate(provider.extent[1]).zoomTo(provider.maxZoom)
                     ];
                     return true;
                 } else {
@@ -198,7 +168,7 @@
      *
      * Tested with version 0.3 and 0.4, but should work on all 0.x releases.
      */
-    if (typeof L === "object") {
+    if (typeof L === 'object') {
         L.StamenTileLayer = L.TileLayer.extend({
             initialize: function(name, options) {
                 var provider = getProvider(name),
@@ -209,7 +179,7 @@
                         minZoom: provider.minZoom,
                         maxZoom: provider.maxZoom,
                         subdomains: provider.subdomains,
-                        scheme: "xyz",
+                        scheme: 'xyz',
                         attribution: provider.attribution,
                         sa_id: name
                     });
@@ -231,11 +201,11 @@
      *
      * Tested with v2.1x.
      */
-    if (typeof OpenLayers === "object") {
+    if (typeof OpenLayers === 'object') {
         // make a tile URL template OpenLayers-compatible
         function openlayerize(url) {
             return url.replace(/({.})/g, function(v) {
-                return "$" + v.toLowerCase();
+                return '$' + v.toLowerCase();
             });
         }
 
@@ -246,11 +216,9 @@
                     url = provider.url,
                     subdomains = provider.subdomains,
                     hosts = [];
-                if (url.indexOf("{S}") > -1) {
+                if (url.indexOf('{S}') > -1) {
                     for (var i = 0; i < subdomains.length; i++) {
-                        hosts.push(
-                            openlayerize(url.replace("{S}", subdomains[i]))
-                        );
+                        hosts.push(openlayerize(url.replace('{S}', subdomains[i])));
                     }
                 } else {
                     hosts.push(openlayerize(url));
@@ -259,7 +227,7 @@
                     {
                         numZoomLevels: provider.maxZoom,
                         buffer: 0,
-                        transitionEffect: "resize",
+                        transitionEffect: 'resize',
                         // see: <http://dev.openlayers.org/apidocs/files/OpenLayers/Layer/OSM-js.html#OpenLayers.Layer.OSM.tileOptions>
                         // and: <http://dev.openlayers.org/apidocs/files/OpenLayers/Tile/Image-js.html#OpenLayers.Tile.Image.crossOriginKeyword>
                         tileOptions: {
@@ -269,12 +237,7 @@
                     },
                     options
                 );
-                return OpenLayers.Layer.OSM.prototype.initialize.call(
-                    this,
-                    name,
-                    hosts,
-                    options
-                );
+                return OpenLayers.Layer.OSM.prototype.initialize.call(this, name, hosts, options);
             }
         });
     }
@@ -283,7 +246,7 @@
      * StamenMapType for Google Maps API V3
      * <https://developers.google.com/maps/documentation/javascript/>
      */
-    if (typeof google === "object" && typeof google.maps === "object") {
+    if (typeof google === 'object' && typeof google.maps === 'object') {
         // Extending Google class based on a post by Bogart Salzberg of Portland Webworks,
         // http://www.portlandwebworks.com/blog/extending-googlemapsmap-object
         google.maps.ImageMapType = (function(_constructor) {
@@ -308,10 +271,10 @@
                         y = coord.y,
                         index = (zoom + x + y) % subdomains.length;
                     return provider.url
-                        .replace("{S}", subdomains[index])
-                        .replace("{Z}", zoom)
-                        .replace("{X}", x)
-                        .replace("{Y}", y);
+                        .replace('{S}', subdomains[index])
+                        .replace('{Z}', zoom)
+                        .replace('{X}', x)
+                        .replace('{Y}', y);
                 },
                 tileSize: new google.maps.Size(256, 256),
                 name: name,
@@ -324,4 +287,4 @@
         // Possibly fixed, see above ^^^ | SC
         google.maps.StamenMapType.prototype = new google.maps.ImageMapType();
     }
-})(typeof exports === "undefined" ? this : exports);
+})(typeof exports === 'undefined' ? this : exports);
